@@ -4,6 +4,7 @@
 { * https://github.com/PassByYou888/ZServer4D                                  * }
 { * https://github.com/PassByYou888/zExpression                                * }
 { * https://github.com/PassByYou888/zTranslate                                 * }
+{ * https://github.com/PassByYou888/zSound                                     * }
 { ****************************************************************************** }
 (*
   update history
@@ -164,7 +165,7 @@ type
 
     PObjectDataCacheItem = ^TObjectDataCacheItem;
 
-    TObjectDataCacheItem = record
+    TObjectDataCacheItem = packed record
       Description: umlString;
       ExtID: Byte;
       FirstBlockPOS: Int64;
@@ -182,7 +183,7 @@ type
 
     PObjectDataCacheField = ^TObjectDataCacheField;
 
-    TObjectDataCacheField = record
+    TObjectDataCacheField = packed record
       UpLevelFieldPOS: Int64;
       Description: umlString;
       HeaderCount: Int64;

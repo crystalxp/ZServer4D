@@ -4,6 +4,7 @@
 { * https://github.com/PassByYou888/ZServer4D                                  * }
 { * https://github.com/PassByYou888/zExpression                                * }
 { * https://github.com/PassByYou888/zTranslate                                 * }
+{ * https://github.com/PassByYou888/zSound                                     * }
 { ****************************************************************************** }
 
 (*
@@ -37,7 +38,7 @@ type
 
   PHashListData = ^THashListData;
 
-  THashListData = record
+  THashListData = packed record
     qHash: THash;
     LowerCaseName, OriginName: SystemString;
     Data: Pointer;
@@ -105,7 +106,7 @@ type
 
   PInt64HashListObjectStruct = ^TInt64HashListObjectStruct;
 
-  TInt64HashListObjectStruct = record
+  TInt64HashListObjectStruct = packed record
     qHash: THash;
     i64: Int64;
     Data: TCoreClassObject;
@@ -171,7 +172,7 @@ type
 
   PInt64HashListPointerStruct = ^TInt64HashListPointerStruct;
 
-  TInt64HashListPointerStruct = record
+  TInt64HashListPointerStruct = packed record
     qHash: THash;
     i64: Int64;
     Data: Pointer;
@@ -235,7 +236,7 @@ type
 
   PUInt32HashListObjectStruct = ^TUInt32HashListObjectStruct;
 
-  TUInt32HashListObjectStruct = record
+  TUInt32HashListObjectStruct = packed record
     qHash: THash;
     u32: UInt32;
     Data: TCoreClassObject;
@@ -303,7 +304,7 @@ type
 
   PPointerHashListNativeUIntStruct = ^TPointerHashListNativeUIntStruct;
 
-  TPointerHashListNativeUIntStruct = record
+  TPointerHashListNativeUIntStruct = packed record
     qHash: THash;
     NPtr: Pointer;
     Data: NativeUInt;
@@ -380,7 +381,7 @@ type
 
   THashObjectChangeEvent = procedure(Sender: THashObjectList; Name: SystemString; _OLD, _New: TCoreClassObject) of object;
 
-  THashObjectListData = record
+  THashObjectListData = packed record
     obj: TCoreClassObject;
     OnChnage: THashObjectChangeEvent;
   end;
@@ -454,7 +455,7 @@ type
 
   THashVariantChangeEvent = procedure(Sender: THashVariantList; Name: SystemString; _OLD, _New: Variant) of object;
 
-  THashVariantListData = record
+  THashVariantListData = packed record
     V: Variant;
     OnChnage: THashVariantChangeEvent;
   end;
@@ -578,7 +579,7 @@ type
     property VariantList: THashVariantList read FVariantList write FVariantList;
   end;
 
-  TListCardinalData = record
+  TListCardinalData = packed record
     Data: Cardinal;
   end;
 
@@ -605,7 +606,7 @@ type
     property Items[Idx: Integer]: Cardinal read GetItems write SetItems; default;
   end;
 
-  TListInt64Data = record
+  TListInt64Data = packed record
     Data: Int64;
   end;
 
@@ -636,7 +637,7 @@ type
     property List: TCoreClassList read FList;
   end;
 
-  TListNativeIntData = record
+  TListNativeIntData = packed record
     Data: NativeInt;
   end;
 
@@ -663,7 +664,7 @@ type
     property Items[Idx: Integer]: NativeInt read GetItems write SetItems; default;
   end;
 
-  TListIntegerData = record
+  TListIntegerData = packed record
     Data: Integer;
   end;
 
@@ -690,7 +691,7 @@ type
     property Items[Idx: Integer]: Integer read GetItems write SetItems; default;
   end;
 
-  TListDoubleData = record
+  TListDoubleData = packed record
     Data: Double;
   end;
 
@@ -717,7 +718,7 @@ type
     property Items[Idx: Integer]: Double read GetItems write SetItems; default;
   end;
 
-  TListPointerData = record
+  TListPointerData = packed record
     Data: Pointer;
   end;
 
@@ -746,7 +747,7 @@ type
 
   TPointerList = TListPointer;
 
-  TListStringData = record
+  TListStringData = packed record
     Data: SystemString;
     obj: TCoreClassObject;
     Hash: THash;
@@ -780,7 +781,7 @@ type
     property Objects[Idx: Integer]: TCoreClassObject read GetObjects write SetObjects;
   end;
 
-  TListPascalStringData = record
+  TListPascalStringData = packed record
     Data: TPascalString;
     obj: TCoreClassObject;
     Hash: THash;
@@ -819,7 +820,7 @@ type
     property Objects[Idx: Integer]: TCoreClassObject read GetObjects write SetObjects;
   end;
 
-  TListVariantData = record
+  TListVariantData = packed record
     Data: Variant;
   end;
 
@@ -846,7 +847,7 @@ type
     property Items[Idx: Integer]: Variant read GetItems write SetItems; default;
   end;
 
-  TVariantToDataListData = record
+  TVariantToDataListData = packed record
     id: Variant;
     Data: Pointer;
   end;
@@ -879,7 +880,7 @@ type
     property OnDataFreeProc: TPointerDataNotifyProc read FOnDataFreeProc write FOnDataFreeProc;
   end;
 
-  TVariantToVariantListData = record
+  TVariantToVariantListData = packed record
     V: Variant;
   end;
 
@@ -908,7 +909,7 @@ type
     property Items[id: Variant]: Variant read GetItems write SetItems; default;
   end;
 
-  TVariantToObjectListData = record
+  TVariantToObjectListData = packed record
     obj: TCoreClassObject;
   end;
 
@@ -943,7 +944,7 @@ type
   {$IFNDEF FPC} TBackcallNotifyProc = reference to procedure(Sender: TBackcalls; TriggerObject: TCoreClassObject; Param1, Param2, Param3: Variant); {$ENDIF}
   PBackcallData                     = ^TBackcallData;
 
-  TBackcallData = record
+  TBackcallData = packed record
     FlagObject: TCoreClassObject;
     NotifyCall: TBackcallNotifyCall;
     NotifyMethod: TBackcallNotifyMethod;

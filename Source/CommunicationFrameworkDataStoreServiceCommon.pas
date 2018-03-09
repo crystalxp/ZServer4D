@@ -5,6 +5,7 @@
 { * https://github.com/PassByYou888/ZServer4D                                  * }
 { * https://github.com/PassByYou888/zExpression                                * }
 { * https://github.com/PassByYou888/zTranslate                                 * }
+{ * https://github.com/PassByYou888/zSound                                     * }
 { ****************************************************************************** }
 (*
   update history
@@ -58,7 +59,7 @@ type
   //
   PDataStoreClientQueryNotify = ^TDataStoreClientQueryNotify;
 
-  TDataStoreClientQueryNotify = record
+  TDataStoreClientQueryNotify = packed record
     UserPointer: Pointer;
     UserObject: TCoreClassObject;
     UserVariant: Variant;
@@ -107,7 +108,7 @@ type
   //
   PDataStoreClientDownloadNotify = ^TDataStoreClientDownloadNotify;
 
-  TDataStoreClientDownloadNotify = record
+  TDataStoreClientDownloadNotify = packed record
     UserPointer: Pointer;
     UserObject: TCoreClassObject;
     UserVariant: Variant;
@@ -126,7 +127,7 @@ type
     procedure Init; {$IFDEF INLINE_ASM} inline; {$ENDIF}
   end;
 
-  TPipeState = record
+  TPipeState = packed record
     WriteOutputDB, Activted, SyncToClient, MemoryMode, Paused: Boolean;
     DBCounter, QueryCounter, QueryResultCounter, MaxQueryCompare, MaxQueryResult: Int64;
     QueryPerformanceOfPerSec, ConsumTime, MaxWaitTime: Double;

@@ -4,6 +4,7 @@
 { * https://github.com/PassByYou888/ZServer4D                                  * }
 { * https://github.com/PassByYou888/zExpression                                * }
 { * https://github.com/PassByYou888/zTranslate                                 * }
+{ * https://github.com/PassByYou888/zSound                                     * }
 { ****************************************************************************** }
 unit opCode;
 
@@ -12,7 +13,7 @@ unit opCode;
 interface
 
 uses SysUtils, Variants, Math, CoreClasses, PascalStrings, DoStatusIO,
-  ListEngine, UnicodeMixedLib;
+  ListEngine, UnicodeMixedLib, DataFrameEngine;
 
 type
   TOpValueType = (
@@ -27,7 +28,7 @@ type
 
   POpData = ^opData;
 
-  opData = record
+  opData = packed record
     OnGet: TOpCode;
     Value: Variant;
     ValueType: TOpValueType;
@@ -97,10 +98,10 @@ type
     procedure SaveToStream(Stream: TCoreClassStream);
     class function LoadFromStream(Fast: Boolean; Stream: TCoreClassStream; out LoadedOp: TOpCode): Boolean;
 
-    function AddValue(v: Variant): Integer; overload;
-    function AddValue(v: Variant; vt: TOpValueType): Integer; overload;
-    function AddLink(obj: TOpCode): Integer;
-
+    function AddValue(v: Variant): Integer; overload; {$IFDEF INLINE_ASM} inline; {$ENDIF}
+    function AddValue(v: Variant; vt: TOpValueType): Integer; overload; {$IFDEF INLINE_ASM} inline; {$ENDIF}
+    function AddLink(obj: TOpCode): Integer; {$IFDEF INLINE_ASM} inline; {$ENDIF}
+    { }
     function CloneNewSelf: TOpCode;
 
     property Param[index: Integer]: POpData read GetParam; default;
@@ -251,12 +252,10 @@ var
 
 implementation
 
-uses DataFrameEngine, zExpression;
-
 type
   PopRTproc = ^TopRTproc;
 
-  TopRTproc = record
+  TopRTproc = packed record
     Param: TOpParam;
     Name: SystemString;
     OnOpCall: TOnOpCall;
@@ -265,9 +264,9 @@ type
     procedure Init;
   end;
 
-  opRegData = record
+  opRegData = packed record
     opClass: opClass;
-    OpName: SystemString;
+    OpName: TPascalString;
     Hash: Cardinal;
   end;
 
@@ -285,7 +284,7 @@ begin
   {$IFNDEF FPC} OnOpProc := nil; {$ENDIF FPC}
 end;
 
-function GetRegistedOp(Name: SystemString): POpRegData;
+function GetRegistedOp(Name: TPascalString): POpRegData;
 var
   i   : Integer;
   p   : POpRegData;
@@ -948,7 +947,7 @@ end;
 
 function op_Add.doExecute(opRT: TOpCustomRunTime): Variant;
 
-  function Fast_VarIsStr(var v: Variant): Boolean;
+  function Fast_VarIsStr(var v: Variant): Boolean; {$IFDEF INLINE_ASM} inline; {$ENDIF}
   var
     p: PVarData;
   begin
@@ -989,7 +988,7 @@ begin
               begin
                 // string combine
                 n1 := VarToStr(Result);
-                if NumTextType(n1) = nttUnknow then
+                if not umlIsNumber(n1) then
                   begin
                     Result := n1 + VarToStr(Param[i]^.Value);
                     continue;
@@ -1000,7 +999,7 @@ begin
               begin
                 // string combine
                 n2 := VarToStr(Param[i]^.Value);
-                if NumTextType(n2) = nttUnknow then
+                if not umlIsNumber(n2) then
                   begin
                     Result := VarToStr(Result) + n2;
                     continue;
@@ -1246,6 +1245,5 @@ finalization
 
 DisposeObject(DefaultOpRT);
 _FreeOp;
+
 end.
-
-

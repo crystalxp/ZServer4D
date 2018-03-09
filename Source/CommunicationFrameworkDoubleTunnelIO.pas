@@ -5,6 +5,7 @@
 { * https://github.com/PassByYou888/ZServer4D                                  * }
 { * https://github.com/PassByYou888/zExpression                                * }
 { * https://github.com/PassByYou888/zTranslate                                 * }
+{ * https://github.com/PassByYou888/zSound                                     * }
 { ****************************************************************************** }
 (*
   update history
@@ -68,7 +69,7 @@ type
 
   PPostBatchBackcallData = ^TPostBatchBackcallData;
 
-  TPostBatchBackcallData = record
+  TPostBatchBackcallData = packed record
     OnCall: TStateCall;
     OnMethod: TStateMethod;
     {$IFNDEF FPC}
@@ -230,7 +231,7 @@ type
   {$ENDIF}
   PRemoteFileBackcall = ^TRemoteFileBackcall;
 
-  TRemoteFileBackcall = record
+  TRemoteFileBackcall = packed record
     UserData: Pointer;
     UserObject: TCoreClassObject;
     OnCompleteCall: TFileCompleteCall;

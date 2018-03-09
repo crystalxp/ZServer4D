@@ -4,6 +4,7 @@
 { * https://github.com/PassByYou888/ZServer4D                                  * }
 { * https://github.com/PassByYou888/zExpression                                * }
 { * https://github.com/PassByYou888/zTranslate                                 * }
+{ * https://github.com/PassByYou888/zSound                                     * }
 { ****************************************************************************** }
 
 unit GeometryLib;
@@ -206,7 +207,7 @@ type
   // q = ([x, y, z], w)
   PQuaternion = ^TQuaternion;
 
-  TQuaternion = record
+  TQuaternion = packed record
     ImagPart: TAffineVector;
     RealPart: single;
   end;
@@ -214,11 +215,11 @@ type
   PQuaternionArray = ^TQuaternionArray;
   TQuaternionArray = array [0 .. MaxInt shr 5] of TQuaternion;
 
-  TRectangle = record
+  TRectangle = packed record
     Left, Top, Width, Height: Integer;
   end;
 
-  TFrustum = record
+  TFrustum = packed record
     pLeft, pTop, pRight, pBottom, pNear, pFar: THmgPlane;
   end;
 

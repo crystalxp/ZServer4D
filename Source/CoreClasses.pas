@@ -4,6 +4,7 @@
 { * https://github.com/PassByYou888/ZServer4D                                  * }
 { * https://github.com/PassByYou888/zExpression                                * }
 { * https://github.com/PassByYou888/zTranslate                                 * }
+{ * https://github.com/PassByYou888/zSound                                     * }
 { ****************************************************************************** }
 
 (*
@@ -13,8 +14,6 @@
 *)
 
 unit CoreClasses;
-
-{$I zDefine.inc}
 
 interface
 
@@ -26,6 +25,8 @@ uses SysUtils, Classes, Types, PascalStrings,
   , System.Generics.Collections
   {$ENDIF}
     ;
+
+{$I zDefine.inc}
 
 const
   fmCreate        = Classes.fmCreate;
@@ -168,8 +169,8 @@ procedure DisposeObject(const objs: array of TObject); overload;
 procedure FreeObject(const obj: TObject); overload; {$IFDEF INLINE_ASM} inline; {$ENDIF}
 procedure FreeObject(const objs: array of TObject); overload;
 
-procedure LockObject(obj:TObject); {$IFDEF INLINE_ASM} inline; {$ENDIF}
-procedure UnLockObject(obj:TObject); {$IFDEF INLINE_ASM} inline; {$ENDIF}
+procedure LockObject(obj:TObject);
+procedure UnLockObject(obj:TObject);
 
 procedure FillPtrByte(Dest:Pointer; Count: NativeUInt; const Value: Byte); {$IFDEF INLINE_ASM} inline; {$ENDIF}
 function CompareMemory(P1, P2: Pointer; MLen: NativeUInt): Boolean; {$IFDEF INLINE_ASM} inline; {$ENDIF}
@@ -268,7 +269,7 @@ end;
 
 procedure FillPtrByte(Dest:Pointer; Count: NativeUInt; const Value: Byte);
 var
-  Index: NativeUInt;
+  Index: NativeInt;
   V    : UInt64;
   PB   : PByte;
   Total: NativeUInt;

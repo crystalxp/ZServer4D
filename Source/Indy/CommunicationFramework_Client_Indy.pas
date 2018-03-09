@@ -5,6 +5,7 @@
 { * https://github.com/PassByYou888/ZServer4D                                  * }
 { * https://github.com/PassByYou888/zExpression                                * }
 { * https://github.com/PassByYou888/zTranslate                                 * }
+{ * https://github.com/PassByYou888/zSound                                     * }
 { ****************************************************************************** }
 (*
   update history
@@ -105,15 +106,9 @@ begin
 end;
 
 function ToIDBytes(p: PByte; Size: Integer): TIdBytes; inline;
-var
-  i: Integer;
 begin
   SetLength(Result, Size);
-  for i := 0 to Size - 1 do
-    begin
-      Result[i] := p^;
-      inc(p);
-    end;
+  CopyPtr(p, @Result[0], Size);
 end;
 
 function TClientIntf.Context: TIdTCPClient;

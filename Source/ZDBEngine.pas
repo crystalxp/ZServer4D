@@ -4,6 +4,7 @@
 { * https://github.com/PassByYou888/ZServer4D                                  * }
 { * https://github.com/PassByYou888/zExpression                                * }
 { * https://github.com/PassByYou888/zTranslate                                 * }
+{ * https://github.com/PassByYou888/zSound                                     * }
 { ****************************************************************************** }
 (*
   update history
@@ -216,7 +217,7 @@ type
 
   PQueryState = ^TQueryState;
 
-  TQueryState = record
+  TQueryState = packed record
     DBEng: TDBStoreBase;
     StorePos: Int64;
     QueryHnd: PHeader;
@@ -292,7 +293,7 @@ type
 
   PRemoveQueueData = ^TRemoveQueueData;
 
-  TRemoveQueueData = record
+  TRemoveQueueData = packed record
     OnRemoveCall: TRemoveCall;
     OnRemoveMethod: TRemoveMethod;
     {$IFNDEF FPC}

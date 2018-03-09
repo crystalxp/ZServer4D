@@ -4,6 +4,7 @@
 { * https://github.com/PassByYou888/ZServer4D                                  * }
 { * https://github.com/PassByYou888/zExpression                                * }
 { * https://github.com/PassByYou888/zTranslate                                 * }
+{ * https://github.com/PassByYou888/zSound                                     * }
 { ****************************************************************************** }
 (*
   update history
@@ -50,7 +51,7 @@ type
   {$ENDIF}
   TQueueState = (qsUnknow, qsSendConsoleCMD, qsSendStreamCMD, qsSendDirectConsoleCMD, qsSendDirectStreamCMD, qsSendBigStream, qsSendCompleteBuffer);
 
-  TQueueData = record
+  TQueueData = packed record
     State: TQueueState;
     Client: TPeerIO;
     Cmd: SystemString;
@@ -228,7 +229,7 @@ type
 
   PBigStreamBatchPostData = ^TBigStreamBatchPostData;
 
-  TBigStreamBatchPostData = record
+  TBigStreamBatchPostData = packed record
     Source: TMemoryStream64;
     CompletedBackcallPtr: UInt64;
     RemoteMD5: UnicodeMixedLib.TMD5;
@@ -970,7 +971,8 @@ type
 
   Pp2pVMFragmentPackage = ^Tp2pVMFragmentPackage;
 
-  Tp2pVMFragmentPackage = record
+  Tp2pVMFragmentPackage = packed record
+  public
     buffSiz: Cardinal;
     frameworkID: Cardinal;
     p2pID: Cardinal;
@@ -1013,7 +1015,7 @@ type
   // p2p VM listen service
   Pp2pVMListen = ^Tp2pVMListen;
 
-  Tp2pVMListen = record
+  Tp2pVMListen = packed record
     frameworkID: Cardinal;
     ListenHost: TIPV6;
     ListenPort: Word;
@@ -1112,7 +1114,7 @@ type
   TCommunicationFrameworkListProc = reference to procedure(PeerFramework: TCommunicationFramework);
   {$ENDIF}
 
-  TOnEcho = record
+  TOnEcho = packed record
     OnEchoCall: TStateCall;
     OnEchoMethod: TStateMethod;
     {$IFNDEF FPC} OnEchoProc: TStateProc; {$ENDIF}
@@ -3948,8 +3950,11 @@ begin
   Inc(FOwnerFramework.Statistics[TStatisticsType.stTriggerDisconnect]);
 
   LockObject(FOwnerFramework.FPerClientHashList); // atomic lock
+  try
   FOwnerFramework.FPerClientHashList.Delete(FID);
+  finally
   UnLockObject(FOwnerFramework.FPerClientHashList); // atomic lock
+  end;
 
   LockObject(FQueueList); // atomic lock
   try

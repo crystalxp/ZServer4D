@@ -4,6 +4,7 @@
 { * https://github.com/PassByYou888/ZServer4D                                  * }
 { * https://github.com/PassByYou888/zExpression                                * }
 { * https://github.com/PassByYou888/zTranslate                                 * }
+{ * https://github.com/PassByYou888/zSound                                     * }
 { ****************************************************************************** }
 
 unit TextTable;
@@ -18,7 +19,7 @@ uses SysUtils, CoreClasses, DataFrameEngine, ListEngine, UnicodeMixedLib,
 type
   TTranlateStyle = (tsPascalText, tsPascalComment, tsCText, tsCComment, tsNormalText, tsDFMText);
 
-  TTextTableItem = record
+  TTextTableItem = packed record
     // origin info
     OriginText: SystemString;
     Category: SystemString;

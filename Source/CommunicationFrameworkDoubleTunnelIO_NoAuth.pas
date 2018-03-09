@@ -5,6 +5,7 @@
 { * https://github.com/PassByYou888/ZServer4D                                  * }
 { * https://github.com/PassByYou888/zExpression                                * }
 { * https://github.com/PassByYou888/zTranslate                                 * }
+{ * https://github.com/PassByYou888/zSound                                     * }
 { ****************************************************************************** }
 (*
   update history
@@ -55,7 +56,7 @@ type
 
   PPostBatchBackcallData_NoAuth = ^TPostBatchBackcallData_NoAuth;
 
-  TPostBatchBackcallData_NoAuth = record
+  TPostBatchBackcallData_NoAuth = packed record
     OnCall: TStateCall;
     OnMethod: TStateMethod;
     {$IFNDEF FPC}
@@ -156,7 +157,7 @@ type
   {$ENDIF}
   PRemoteFileBackcall_NoAuth = ^TRemoteFileBackcall_NoAuth;
 
-  TRemoteFileBackcall_NoAuth = record
+  TRemoteFileBackcall_NoAuth = packed record
     UserData: Pointer;
     UserObject: TCoreClassObject;
     OnCompleteCall: TFileCompleteCall_NoAuth;

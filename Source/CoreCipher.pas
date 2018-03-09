@@ -4,6 +4,7 @@
 { * https://github.com/PassByYou888/ZServer4D                                  * }
 { * https://github.com/PassByYou888/zExpression                                * }
 { * https://github.com/PassByYou888/zTranslate                                 * }
+{ * https://github.com/PassByYou888/zSound                                     * }
 { ****************************************************************************** }
 
 (*
@@ -123,7 +124,7 @@ type
   PXXTEABlock = ^TXXTEABlock;
   TXXTEABlock = array [0 .. 63] of Byte; { XXTEA }
 
-  TDesConverter = record
+  TDesConverter = packed record
     case Byte of
       0: (Bytes: array [0 .. 7] of Byte);
       1: (DWords: array [0 .. 1] of DWord)
@@ -222,7 +223,7 @@ type
     Buf: array [0 .. 63] of Byte;   { input buffer }
   end;
 
-  TSHA1Context = record { SHA-1 }
+  TSHA1Context = packed record { SHA-1 }
     sdHi: DWord;
     sdLo: DWord;
     sdIndex: DWord;
@@ -376,7 +377,7 @@ type
 
   PParallelCipherJobData = ^TParallelCipherJobData;
 
-  TParallelCipherJobData = record
+  TParallelCipherJobData = packed record
     cipherFunc: TParallelCipherFunc;
     KeyBuffer: Pointer;
     OriginBuffer: Pointer;
@@ -570,7 +571,7 @@ type
 type
   { Miscellaneous hash algorithms }
   { Misc public utilities }
-  TMISC = record
+  TMISC = packed record
   private
     class procedure Mix128(var X: T128Bit); static; {$IFDEF INLINE_ASM}inline; {$ENDIF}
     class function Ran0Prim(var Seed: Integer; IA, IQ, IR: Integer): Integer; static; {$IFDEF INLINE_ASM}inline; {$ENDIF}
@@ -610,7 +611,7 @@ type
 
   PTwoFishContext = ^TTwoFishContext;
 
-  TTwoFishContext = record
+  TTwoFishContext = packed record
     SubKeys: TDCPTFSubKeys;
     SBox: TDCPTFSBox;
   end;
